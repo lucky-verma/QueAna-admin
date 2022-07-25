@@ -9,18 +9,11 @@
           >
             ©
             {{ new Date().getFullYear() }}, made with
-            <i class="fa fa-heart"></i> by
-            <a
-              href="https://www.creative-tim.com"
-              class="font-weight-bold"
-              target="_blank"
-              >Creative Tim</a
-            >
-            for a better web.
+            <i class="fa fa-heart"></i> by Lucky Verma for a better web.
           </div>
         </div>
         <div class="col-lg-6">
-          <ul
+          <!-- <ul
             class="nav nav-footer justify-content-center justify-content-lg-end"
           >
             <li class="nav-item">
@@ -55,7 +48,7 @@
                 >License</a
               >
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
