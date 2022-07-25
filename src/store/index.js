@@ -16,7 +16,14 @@ export default createStore({
     showNavbar: true,
     showFooter: true,
     showMain: true,
-    layout: "default"
+    layout: "default",
+    current_user: {
+      customer_id: "",
+      first_name: "",
+      last_name: "",
+      token: "",
+    },
+    is_logged_in: false,
   },
   mutations: {
     toggleConfigurator(state) {
@@ -44,12 +51,12 @@ export default createStore({
       } else {
         state.isNavFixed = false;
       }
-    }
+    },
   },
   actions: {
     toggleSidebarColor({ commit }, payload) {
       commit("sidebarType", payload);
-    }
+    },
   },
-  getters: {}
+  getters: {},
 });

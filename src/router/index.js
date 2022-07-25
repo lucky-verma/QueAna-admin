@@ -54,7 +54,6 @@ const routes = [
     name: "Signup",
     component: Signup,
   },
-  
 ];
 
 const router = createRouter({
@@ -62,5 +61,21 @@ const router = createRouter({
   routes,
   linkActiveClass: "active",
 });
+
+// router.beforeEach((to, from, next) => {
+//   console.log("Route error is coming.");
+//   // redirect to login page if not logged in and trying to access a restricted page
+//   const publicPages = ["/signin"];
+//   const authRequired = !publicPages.includes(to.path);
+//   const loggedIn = localStorage.getItem("user");
+//   console.log(loggedIn, authRequired);
+
+//   if (authRequired && !loggedIn) {
+//     console.log("Not logged in ");
+//     next({ name: "Signin" });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
