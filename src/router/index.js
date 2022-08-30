@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
-import Tables from "../views/Tables.vue";
-import QuestionBank from "../views/QuestionBank.vue";
+// import Tables from "../views/Tables.vue";
+import Exams from "../views/Exam.vue";
+import addExam from "../views/Exam/AddExam.vue";
 import Billing from "../views/Billing.vue";
 import VirtualReality from "../views/VirtualReality.vue";
 import RTL from "../views/Rtl.vue";
@@ -17,20 +18,21 @@ const routes = [
   },
 
   {
-    path: "/question_bank",
-    name: "Question Bank",
-    component: QuestionBank,
+    path: "/add-exam",
+    name: "Add Exam",
+    component: addExam,
+  },
+  {
+    path: "/exam",
+    name: "Exam",
+    component: Exams,
   },
   {
     path: "/dashboard-default",
-    name: "Dashboard",
+    name: "Student Feedback",
     component: Dashboard,
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    component: Tables,
-  },
+
   {
     path: "/billing",
     name: "Billing",
