@@ -1,22 +1,21 @@
-import { convertToSearchParams } from "../utils/utils";
 import { serverAPI } from "./index";
-class QuestionAPI {
+class AnswerAPI {
   constructor() {
     console.log(process.env.SERVER);
   }
-  static fetchAllQuestion(keys) {
-    return serverAPI.get(`/question/list/?${convertToSearchParams(keys)}`, {
+  static fetchAllAnswers() {
+    return serverAPI.get(`/answer/list/`, {
       headers: {
         // Authorization: `Bearer ${store.state.loginManagement.token}`,
       },
     });
   }
-  static createQuestion(body) {
-    return serverAPI.post(`/question/create`, body, {
+  static createAnswer(body) {
+    return serverAPI.post(`/answer/create`, body, {
       headers: {
         // Authorization: `Bearer ${store.state.loginManagement.token}`,
       },
     });
   }
 }
-export default QuestionAPI;
+export default AnswerAPI;

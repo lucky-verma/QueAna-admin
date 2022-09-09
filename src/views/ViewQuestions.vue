@@ -1,14 +1,8 @@
 <template>
   <div class="card">
+    <vue-basic-alert :duration="300" :closeIn="4000" ref="alert" />
     <div class="card-header pb-0">
-      <h6>Exam List</h6>
-      <argon-button
-        color="success"
-        size="sm"
-        class="ms-auto"
-        @click="$router.push('/add-exam')"
-        >Add Exam</argon-button
-      >
+      <h6>All Questions</h6>
     </div>
 
     <div class="card-body px-0 pt-0 pb-2">
@@ -19,42 +13,29 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Exam Name
+                Question No
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
               >
-                Total Question
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Difficulty
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Start Time
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                End Time
+                Correct Option
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
                 Created On
               </th>
+
               <th class="text-secondary opacity-7"></th>
+              <!-- <th class="text-secondary opacity-7"></th> -->
             </tr>
           </thead>
           <tbody>
-            <tr v-for="data in examList" :key="data._id">
+            <tr v-for="data in questionList" :key="data._id">
               <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="ml-3 mb-0 text-sm">{{ data.name }}</h6>
+                    <h6 class="ml-3 mb-0 text-sm" v-html="data.question"></h6>
                     <!-- <p class="text-xs text-secondary mb-0">
                       john@creative-tim.com
                     </p> -->
@@ -67,45 +48,22 @@
                 </p>
                 <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
               </td>
-              <td class="align-middle text-center text-sm">
-                <span
-                  :class="'badge badge-sm ' + returnClass(data.difficulty)"
-                  >{{ data.difficulty }}</span
-                >
-              </td>
+
               <td class="align-middle text-center">
                 <span class="text-secondary text-xs font-weight-bold">{{
-                  data.created_at.toString()
+                  data.created_at
                 }}</span>
               </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{
-                  data.start_time.toString()
-                }}</span>
-              </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"
-                  >jk{{ data.end_time.toString() }}</span
-                >
-              </td>
+
               <td class="align-middle">
-                <argon-button
-                  color="primary"
-                  @click="
-                    $router.push(
-                      '/view-question/?exam_id=' +
-                        data._id +
-                        '&exam_name=' +
-                        data.name
-                    )
-                  "
-                  >View Quesitons</argon-button
+                <argon-button color="primary" @click="$router.push('/add-exam')"
+                  >Edit</argon-button
                 >
                 <argon-button
                   color="danger"
                   style="margin-left: 15px"
-                  @click="$router.push('/add-question/')"
-                  >Delete Exams</argon-button
+                  @click="$router.push('/add-exam')"
+                  >Delete</argon-button
                 >
               </td>
             </tr>
@@ -117,18 +75,29 @@
 </template>
 
 <script>
-import ExamAPI from "../api/exam";
+// import { ImageDrop } from "quill-image-drop-module";
+// import ImageResize from "quill-image-resize-module";
+
+// import ExamAPI from "../api/exam";
 import ArgonButton from "@/components/ArgonButton.vue";
+import QuestionAPI from "../api/question";
+// import AnswerAPI from "../api/answer";
+// import axios from "axios";
+import VueBasicAlert from "vue-basic-alert";
 
 export default {
   name: "authors-table",
   data() {
     return {
-      examList: [],
+      questionList: [],
+      showMenu: false,
+      error_text: "",
+      success_text: "",
     };
   },
   components: {
     ArgonButton,
+    VueBasicAlert,
   },
   computed: {
     randomNumber() {
@@ -136,6 +105,14 @@ export default {
     },
   },
   methods: {
+    showError(title, message) {
+      this.$refs.alert.showAlert(
+        "error", // There are 4 types of alert: success, info, warning, error
+        message,
+        title
+      );
+    },
+
     returnClass(data) {
       if (data == "HARD") {
         return "bg-gradient-danger";
@@ -145,13 +122,30 @@ export default {
         return "bg-gradient-success";
       }
     },
+    updateCurrImg(input) {
+      if (input.target.files && input.target.files[0]) {
+        console.log("This image is uploaded");
+        this.questionImageData = input.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.questionImage = e.target.result;
+        };
+        reader.readAsDataURL(input.target.files[0]);
+        // console.log(;
+
+        this.imageUpdated = true;
+      }
+    },
+
     async fetchAllExamList() {
       // console.log(ExamAPI);
-      const ExamList = await ExamAPI.fetchAllExams();
+      const QuestionList = await QuestionAPI.fetchAllQuestion({
+        exam_id: this.$route.query.exam_id,
+      });
 
-      this.examList = ExamList.data.exam;
+      this.questionList = QuestionList.data.questions;
 
-      console.log(this.examList);
+      console.log(this.questionList);
     },
   },
   created() {
@@ -159,3 +153,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.vue-alert > .alert-container .alert-content > p.alert-message {
+  color: black;
+}
+.vue-alert > .alert-container .alert-content > p.alert-head {
+  color: black;
+  font-size: 30px;
+}
+</style>

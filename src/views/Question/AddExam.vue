@@ -18,7 +18,7 @@
           <div class="card">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-                <p class="mb-0">Add Exam</p>
+                <p class="mb-0">Add Question</p>
               </div>
             </div>
             <div class="card-body">
@@ -26,19 +26,9 @@
               <div class="row">
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
-                    >Exam name</label
+                    >Question name</label
                   >
                   <input class="form-control" type="text" v-model="body.name" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Total Questions</label
-                  >
-                  <input
-                    class="form-control"
-                    type="number"
-                    v-model="body.total_questions"
-                  />
                 </div>
                 <div class="col-md-12 mt-2">
                   <label for="example-text-input" class="form-control-label"
