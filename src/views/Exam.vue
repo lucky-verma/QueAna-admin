@@ -63,7 +63,7 @@
               </td>
               <td>
                 <p class="text-xs font-weight-bold mb-0">
-                  {{ randomNumber }}
+                  {{ data.total_questions }}
                 </p>
                 <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
               </td>
@@ -84,9 +84,9 @@
                 }}</span>
               </td>
               <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold"
-                  >jk{{ data.end_time.toString() }}</span
-                >
+                <span class="text-secondary text-xs font-weight-bold">{{
+                  data.end_time.toString()
+                }}</span>
               </td>
               <td class="align-middle">
                 <argon-button

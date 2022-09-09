@@ -5,98 +5,31 @@
       <h6>Exams Questions</h6>
     </div>
 
-    <div class="card-body px-0 pt-0 pb-2">
-      <div class="table-responsive p-0">
-        <table class="table align-items-center mb-0">
-          <thead>
-            <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Question No
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                Correct Option
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Created On
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Start Time
-              </th>
-
-              <th class="text-secondary opacity-7"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="data in examList" :key="data._id">
-              <td>
-                <div class="d-flex px-2 py-1">
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="ml-3 mb-0 text-sm">{{ data.name }}</h6>
-                    <!-- <p class="text-xs text-secondary mb-0">
-                      john@creative-tim.com
-                    </p> -->
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ randomNumber }}
-                </p>
-                <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
-              </td>
-              <td class="align-middle text-center text-sm">
-                <span
-                  :class="'badge badge-sm ' + returnClass(data.difficulty)"
-                  >{{ data.difficulty }}</span
-                >
-              </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{
-                  data.created_at.toString()
-                }}</span>
-              </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{
-                  data.start_time.toString()
-                }}</span>
-              </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{
-                  data.end_time.toString()
-                }}</span>
-              </td>
-              <td class="align-middle">
-                <argon-button color="primary" @click="$router.push('/add-exam')"
-                  >Add Questions</argon-button
-                >
-                <argon-button
-                  color="danger"
-                  style="margin-left: 15px"
-                  @click="$router.push('/add-exam')"
-                  >Delete Exams</argon-button
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
     <!-- Question AREA -->
     <div class="card-body">
-      <p class="text-uppercase text-sm">Question Information</p>
+      <!-- <p class="text-uppercase text-sm">Question Information</p> -->
       <div class="row">
         <!-- <hr class="horizontal dark" /> -->
         <!-- <p class="text-uppercase text-sm">Addtional Information</p> -->
-
+        <div class="col-md-12 mt-2">
+          <label for="example-text-input" class="form-control-label"
+            >Question Number</label
+          >
+          <select
+            name="cars"
+            id="cars"
+            class="form-control"
+            v-model="body.question_no"
+          >
+            <option
+              v-for="question in questionNo"
+              :key="question"
+              :value="question"
+            >
+              {{ question }}
+            </option>
+          </select>
+        </div>
         <div class="col-md-12">
           <label for="example-text-input" class="form-control-label"
             >Question Text
@@ -129,7 +62,7 @@
     <!-- Answer Area -->
     <div class="card-body">
       <div class="row">
-        <div class="col-md-12 mt-3" style="border: 1px gray solid">
+        <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
             >Answer Option 1 [Text to be displayed in each option]</label
           >
@@ -162,7 +95,7 @@
 
         <!-- option 2 -->
 
-        <div class="col-md-12 mt-3" style="border: 1px gray solid">
+        <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
             >Answer Option 2 [Text to be displayed in each option]</label
           >
@@ -195,7 +128,7 @@
 
         <!-- option 3 -->
 
-        <div class="col-md-12 mt-3" style="border: 1px gray solid">
+        <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
             >Answer Option 3 [Text to be displayed in each option]</label
           >
@@ -226,7 +159,7 @@
           />
         </div>
         <!-- Option 4 -->
-        <div class="col-md-12 mt-3" style="border: 1px gray solid">
+        <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
             >Answer Option 4 [Text to be displayed in each option]</label
           >
@@ -283,17 +216,19 @@ import QuestionAPI from "../api/question";
 import AnswerAPI from "../api/answer";
 // import axios from "axios";
 import VueBasicAlert from "vue-basic-alert";
+import { convertToSearchParams } from "../utils/utils";
 
 export default {
   name: "authors-table",
   data() {
     return {
-      examList: [],
+      exam_details: {},
       showMenu: false,
       error_text: "",
       success_text: "",
 
       questionImage: "",
+      questionNo: [],
 
       //Option Images just for displat
       optionImage1: "",
@@ -378,6 +313,7 @@ export default {
         explain: this.body.question_explain,
         exam_id: this.$route.query.exam_id,
         image: this.questionImage,
+        question_no: this.body.question_no,
       };
       const createQuestion = await QuestionAPI.createQuestion(
         questionCreateFormData
@@ -424,17 +360,10 @@ export default {
         "Question added"
       );
 
+      this.$router.push("/view-question?" + this.forwardRouterQuery());
       //Push all of them to api.
     },
-    returnClass(data) {
-      if (data == "HARD") {
-        return "bg-gradient-danger";
-      } else if (data == "MEDIUM") {
-        return "bg-gradient-warning";
-      } else {
-        return "bg-gradient-success";
-      }
-    },
+
     updateCurrImg(input) {
       if (input.target.files && input.target.files[0]) {
         console.log("This image is uploaded");
@@ -448,6 +377,9 @@ export default {
 
         this.imageUpdated = true;
       }
+    },
+    forwardRouterQuery() {
+      return convertToSearchParams(this.$route.query);
     },
     async uploadOptionImage1(input) {
       if (input.target.files && input.target.files[0]) {
@@ -477,17 +409,19 @@ export default {
         this.optionImage4 = await this.fileToBase64(input.target.files[0]);
       }
     },
-    async fetchAllExamList() {
+    async fetchExamDetails() {
       // console.log(ExamAPI);
-      const ExamList = await ExamAPI.fetchAllExams();
+      const ExamList = await ExamAPI.fetExamDetails(this.$route.query.exam_id);
 
       this.examList = ExamList.data.exam;
 
+      this.questionNo = this.examList[0].questions_available;
       console.log(this.examList);
     },
   },
   created() {
-    this.fetchAllExamList();
+    console.log("Tis ");
+    this.fetchExamDetails();
   },
 };
 </script>

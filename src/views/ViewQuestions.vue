@@ -3,6 +3,11 @@
     <vue-basic-alert :duration="300" :closeIn="4000" ref="alert" />
     <div class="card-header pb-0">
       <h6>All Questions</h6>
+      <argon-button
+        color="success"
+        @click="$router.push('/add-question?' + this.forwardRouterQuery())"
+        >Add Question</argon-button
+      >
     </div>
 
     <div class="card-body px-0 pt-0 pb-2">
@@ -11,15 +16,16 @@
           <thead>
             <tr>
               <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+              >
+                Option Number
+              </th>
+              <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
                 Question No
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                Correct Option
-              </th>
+
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
@@ -33,6 +39,12 @@
           <tbody>
             <tr v-for="data in questionList" :key="data._id">
               <td>
+                <div class="d-flex flex-column justify-content-center">
+                  <p>{{ data.question_no }}</p>
+                </div>
+                <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
+              </td>
+              <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="ml-3 mb-0 text-sm" v-html="data.question"></h6>
@@ -41,12 +53,6 @@
                     </p> -->
                   </div>
                 </div>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ randomNumber }}
-                </p>
-                <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
               </td>
 
               <td class="align-middle text-center">
@@ -84,6 +90,7 @@ import QuestionAPI from "../api/question";
 // import AnswerAPI from "../api/answer";
 // import axios from "axios";
 import VueBasicAlert from "vue-basic-alert";
+import { convertToSearchParams } from "../utils/utils";
 
 export default {
   name: "authors-table",
@@ -105,6 +112,9 @@ export default {
     },
   },
   methods: {
+    forwardRouterQuery() {
+      return convertToSearchParams(this.$route.query);
+    },
     showError(title, message) {
       this.$refs.alert.showAlert(
         "error", // There are 4 types of alert: success, info, warning, error
