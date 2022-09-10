@@ -4,6 +4,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Exams from "../views/Exam.vue";
 import Question from "../views/Question.vue";
 import ViewQuestion from "../views/ViewQuestions";
+import EditQuestion from "../views/EditQuestions";
 import addExam from "../views/Exam/AddExam.vue";
 import Billing from "../views/Billing.vue";
 import VirtualReality from "../views/VirtualReality.vue";
@@ -38,6 +39,11 @@ const routes = [
     path: "/add-question/",
     name: "Add Question",
     component: Question,
+  },
+  {
+    path: "/edit-question/",
+    name: "Edit Question",
+    component: EditQuestion,
   },
   {
     path: "/dashboard-default",

@@ -64,7 +64,7 @@
       <div class="row">
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
-            >Answer Option A [Text to be displayed in each option]</label
+            >Answer Option 1 [Text to be displayed in each option]</label
           >
           <textarea
             class="form-control"
@@ -97,7 +97,7 @@
 
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
-            >Answer Option B [Text to be displayed in each option]</label
+            >Answer Option 2 [Text to be displayed in each option]</label
           >
           <textarea
             class="form-control"
@@ -130,7 +130,7 @@
 
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
-            >Answer Option C [Text to be displayed in each option]</label
+            >Answer Option 3 [Text to be displayed in each option]</label
           >
           <textarea
             class="form-control"
@@ -161,7 +161,7 @@
         <!-- Option 4 -->
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
           <label for="example-text-input" class="form-control-label"
-            >Answer Option D [Text to be displayed in each option]</label
+            >Answer Option 4 [Text to be displayed in each option]</label
           >
           <textarea
             class="form-control"
@@ -206,15 +206,11 @@
 </template>
 
 <script>
-// import { ImageDrop } from "quill-image-drop-module";
-// import ImageResize from "quill-image-resize-module";
-
 import ExamAPI from "../api/exam";
 import ArgonButton from "@/components/ArgonButton.vue";
 import { VueEditor } from "vue3-editor";
 import QuestionAPI from "../api/question";
 import AnswerAPI from "../api/answer";
-// import axios from "axios";
 import VueBasicAlert from "vue-basic-alert";
 import { convertToSearchParams } from "../utils/utils";
 
@@ -226,6 +222,7 @@ export default {
       showMenu: false,
       error_text: "",
       success_text: "",
+      questionData: {},
 
       questionImage: "",
       questionNo: [],
@@ -321,7 +318,6 @@ export default {
       console.log(createQuestion, "This is result of questions");
 
       let option1 = {
-        option: "A",
         answer: this.body.option1,
         image: this.optionImage1,
         is_correct: this.correctSolution == 1 ? true : false,
@@ -332,7 +328,6 @@ export default {
       await AnswerAPI.createAnswer(option1);
 
       let option2 = {
-        option: "B",
         answer: this.body.option2,
         image: this.optionImage2,
         is_correct: this.correctSolution == 2 ? true : false,
@@ -341,7 +336,6 @@ export default {
       await AnswerAPI.createAnswer(option2);
 
       let option3 = {
-        option: "C",
         answer: this.body.option3,
         image: this.optionImage3,
         is_correct: this.correctSolution == 3 ? true : false,
@@ -350,7 +344,6 @@ export default {
       await AnswerAPI.createAnswer(option3);
 
       let option4 = {
-        option: "D",
         answer: this.body.option4,
         image: this.optionImage4,
         is_correct: this.correctSolution == 4 ? true : false,
@@ -420,11 +413,94 @@ export default {
       this.examList = ExamList.data.exam;
 
       this.questionNo = this.examList[0].questions_available;
-      console.log(this.examList);
+      if (this.questionData._id) {
+        this.questionNo.push(this.questionData.question_no);
+      }
+      this.questionNo.sort(function (a, b) {
+        return a - b;
+      });
+
+      // console.log(this.examList);
+    },
+    async generateImageUrl(url) {
+      return "http://localhost:3000/" + url;
+    },
+    async prePopulateData() {
+      console.log("Question Data", this.questionData);
+      this.body = {
+        question_text: this.questionData.question,
+        question_explain: this.questionData.explain,
+        question_no: this.questionData.question_no,
+      };
+
+      this.questionImage = this.questionData.image
+        ? await this.generateImageUrl(this.questionData.image)
+        : "";
+
+      for (let index = 0; index < this.questionData.answers.length; index++) {
+        const element = this.questionData.answers[index];
+        if (element.option == "A") {
+          this.body.option1 = element.answer;
+          if (element.is_correct) {
+            this.correctSolution = "1";
+          }
+          if (element.image) {
+            console.log(await this.generateImageUrl(element.image));
+            this.optionImage1 = await this.generateImageUrl(element.image);
+          }
+        }
+        if (element.option == "B") {
+          this.body.option2 = element.answer;
+          if (element.image) {
+            this.optionImage2 = await this.generateImageUrl(element.image);
+          }
+          if (element.is_correct) {
+            this.correctSolution = "2";
+          }
+        }
+        if (element.option == "C") {
+          if (element.image) {
+            this.optionImage3 = await this.generateImageUrl(element.image);
+          }
+          this.body.option3 = element.answer;
+          if (element.is_correct) {
+            this.correctSolution = "3";
+          }
+        }
+        if (element.option == "D") {
+          if (element.image) {
+            this.optionImage4 = await this.generateImageUrl(element.image);
+          }
+          this.body.option4 = element.answer;
+          if (element.is_correct) {
+            this.correctSolution = "4";
+          }
+        }
+      }
+
+      console.log("ANSWER is AMAZING");
+    },
+    async fetchQuestion() {
+      console.log("This is it");
+      let question_id = this.$route.query.question_id;
+      try {
+        const question = await QuestionAPI.fetchQuestion({ question_id });
+        console.log(question.data);
+        if (!question.data.success) {
+          console.log("Error ");
+          return;
+        }
+        this.questionData = question.data.question[0];
+
+        this.prePopulateData();
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   created() {
-    console.log("Tis ");
+    console.log("THIS SIS TEH ROURLDKFJSDLFKDJFLK");
+    this.fetchQuestion();
     this.fetchExamDetails();
   },
 };

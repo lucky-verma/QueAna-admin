@@ -1,11 +1,16 @@
 import { convertToSearchParams } from "../utils/utils";
 import { serverAPI } from "./index";
 class QuestionAPI {
-  constructor() {
-    console.log(process.env.SERVER);
-  }
+  constructor() {}
   static fetchAllQuestion(keys) {
     return serverAPI.get(`/question/list/?${convertToSearchParams(keys)}`, {
+      headers: {
+        // Authorization: `Bearer ${store.state.loginManagement.token}`,
+      },
+    });
+  }
+  static fetchQuestion(keys) {
+    return serverAPI.get(`/question/question/?${convertToSearchParams(keys)}`, {
       headers: {
         // Authorization: `Bearer ${store.state.loginManagement.token}`,
       },

@@ -62,7 +62,13 @@
               </td>
 
               <td class="align-middle">
-                <argon-button color="primary" @click="$router.push('/add-exam')"
+                <argon-button
+                  color="primary"
+                  @click="
+                    $router.push(
+                      '/edit-question?' + this.editQuestionPush(data._id)
+                    )
+                  "
                   >Edit</argon-button
                 >
                 <argon-button
@@ -114,6 +120,11 @@ export default {
   methods: {
     forwardRouterQuery() {
       return convertToSearchParams(this.$route.query);
+    },
+    editQuestionPush(id) {
+      let final = { ...this.$route.query };
+      final.question_id = id;
+      return convertToSearchParams(final);
     },
     showError(title, message) {
       this.$refs.alert.showAlert(
