@@ -23,7 +23,7 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Question No
+                Question Text
               </th>
 
               <th
@@ -47,7 +47,12 @@
               <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="ml-3 mb-0 text-sm" v-html="data.question"></h6>
+                    <h6
+                      style="max-width: 400px; overflow: hidden"
+                      class="ml-3 mb-0 text-sm"
+                      v-html="data.question"
+                    ></h6>
+
                     <!-- <p class="text-xs text-secondary mb-0">
                       john@creative-tim.com
                     </p> -->
