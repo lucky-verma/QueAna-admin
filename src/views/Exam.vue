@@ -101,12 +101,12 @@
                   "
                   >View Quesitons</argon-button
                 >
-                <argon-button
+                <!-- <argon-button
                   color="danger"
                   style="margin-left: 15px"
                   @click="$router.push('/add-question/')"
                   >Delete Exams</argon-button
-                >
+                > -->
               </td>
             </tr>
           </tbody>

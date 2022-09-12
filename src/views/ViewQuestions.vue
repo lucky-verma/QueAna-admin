@@ -74,14 +74,14 @@
                       '/edit-question?' + this.editQuestionPush(data._id)
                     )
                   "
-                  >Edit</argon-button
+                  >View</argon-button
                 >
-                <argon-button
+                <!-- <argon-button
                   color="danger"
                   style="margin-left: 15px"
                   @click="$router.push('/add-exam')"
                   >Delete</argon-button
-                >
+                > -->
               </td>
             </tr>
           </tbody>
