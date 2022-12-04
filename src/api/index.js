@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const serverAPI = (() =>
   axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: process.env.SERVER,
     headers: {
       "Content-Type": "application/json",
     },

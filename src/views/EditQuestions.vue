@@ -12,49 +12,32 @@
         <!-- <hr class="horizontal dark" /> -->
         <!-- <p class="text-uppercase text-sm">Addtional Information</p> -->
         <div class="col-md-12 mt-2">
-          <label for="example-text-input" class="form-control-label"
-            >Question Number</label
-          >
-          <select
-            name="cars"
-            id="cars"
-            class="form-control"
-            v-model="body.question_no"
-          >
-            <option
-              v-for="question in questionNo"
-              :key="question"
-              :value="question"
-            >
+          <label for="example-text-input" class="form-control-label">Question Number</label>
+          <select name="cars" id="cars" class="form-control" v-model="body.question_no">
+            <option v-for="question in questionNo" :key="question" :value="question">
               {{ question }}
             </option>
           </select>
         </div>
         <div class="col-md-12">
-          <label for="example-text-input" class="form-control-label"
-            >Question Text
+          <label for="example-text-input" class="form-control-label">Question Text
           </label>
           <vue-editor v-model="body.question_text"></vue-editor>
         </div>
         <div class="col-md-12 mt-3">
-          <label for="example-text-input" class="form-control-label"
-            >Explain Text
+          <label for="example-text-input" class="form-control-label">Explain Text
           </label>
           <vue-editor v-model="body.question_explain"></vue-editor>
         </div>
         <div class="col-md-12 mt-3">
-          <label for="example-text-input" class="form-control-label"
-            >Add Question Image [Note - If you have multiple images, please
+          <label for="example-text-input" class="form-control-label">Add Question Image [Note - If you have multiple
+            images, please
             compress it to a single image]
           </label>
           <input class="form-control" type="file" @change="updateCurrImg" />
         </div>
         <div class="col-md-12 mt-3">
-          <img
-            style="max-width: 500px; max-height: 500px; border: 3px black solid"
-            :src="questionImage"
-            alt=""
-          />
+          <img style="max-width: 500px; max-height: 500px; border: 3px black solid" :src="questionImage" alt="" />
         </div>
       </div>
     </div>
@@ -63,144 +46,62 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
-          <label for="example-text-input" class="form-control-label"
-            >Answer Option 1 [Text to be displayed in each option]</label
-          >
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="body.option1"
-          ></textarea>
+          <label for="example-text-input" class="form-control-label">Answer Option 1 [Text to be displayed in each
+            option]</label>
+          <textarea class="form-control" type="text" v-model="body.option1"></textarea>
 
-          <input
-            type="radio"
-            id="age1"
-            name="age"
-            value="1"
-            v-model="correctSolution"
-          />
+          <input type="radio" id="age1" name="age" value="1" v-model="correctSolution" />
           <label for="age1">Is Solution?</label><br />
 
-          <input
-            class="form-control"
-            type="file"
-            @change="uploadOptionImage1"
-          />
-          <img
-            style="max-width: 500px; max-height: 500px; border: 3px black solid"
-            :src="optionImage1"
-            alt=""
-          />
+          <input class="form-control" type="file" @change="uploadOptionImage1" />
+          <img style="max-width: 500px; max-height: 500px; border: 3px black solid" :src="optionImage1" alt="" />
         </div>
 
         <!-- option 2 -->
 
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
-          <label for="example-text-input" class="form-control-label"
-            >Answer Option 2 [Text to be displayed in each option]</label
-          >
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="body.option2"
-          ></textarea>
+          <label for="example-text-input" class="form-control-label">Answer Option 2 [Text to be displayed in each
+            option]</label>
+          <textarea class="form-control" type="text" v-model="body.option2"></textarea>
 
-          <input
-            type="radio"
-            id="age1"
-            name="age"
-            value="2"
-            v-model="correctSolution"
-          />
+          <input type="radio" id="age1" name="age" value="2" v-model="correctSolution" />
           <label for="age1">Is Solution?</label><br />
 
-          <input
-            class="form-control"
-            type="file"
-            @change="uploadOptionImage2"
-          />
-          <img
-            style="max-width: 500px; max-height: 500px; border: 3px black solid"
-            :src="optionImage2"
-            alt=""
-          />
+          <input class="form-control" type="file" @change="uploadOptionImage2" />
+          <img style="max-width: 500px; max-height: 500px; border: 3px black solid" :src="optionImage2" alt="" />
         </div>
 
         <!-- option 3 -->
 
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
-          <label for="example-text-input" class="form-control-label"
-            >Answer Option 3 [Text to be displayed in each option]</label
-          >
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="body.option3"
-          ></textarea>
+          <label for="example-text-input" class="form-control-label">Answer Option 3 [Text to be displayed in each
+            option]</label>
+          <textarea class="form-control" type="text" v-model="body.option3"></textarea>
 
-          <input
-            type="radio"
-            id="age1"
-            name="age"
-            value="3"
-            v-model="correctSolution"
-          />
+          <input type="radio" id="age1" name="age" value="3" v-model="correctSolution" />
           <label for="age1">Is Solution?</label><br />
 
-          <input
-            class="form-control"
-            type="file"
-            @change="uploadOptionImage3"
-          />
-          <img
-            style="max-width: 500px; max-height: 500px; border: 3px black solid"
-            :src="optionImage3"
-            alt=""
-          />
+          <input class="form-control" type="file" @change="uploadOptionImage3" />
+          <img style="max-width: 500px; max-height: 500px; border: 3px black solid" :src="optionImage3" alt="" />
         </div>
         <!-- Option 4 -->
         <div class="col-md-6 mt-3" style="border: 1px gray solid">
-          <label for="example-text-input" class="form-control-label"
-            >Answer Option 4 [Text to be displayed in each option]</label
-          >
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="body.option4"
-          ></textarea>
+          <label for="example-text-input" class="form-control-label">Answer Option 4 [Text to be displayed in each
+            option]</label>
+          <textarea class="form-control" type="text" v-model="body.option4"></textarea>
 
-          <input
-            type="radio"
-            id="age1"
-            name="age"
-            value="4"
-            v-model="correctSolution"
-          />
+          <input type="radio" id="age1" name="age" value="4" v-model="correctSolution" />
           <label for="age1">Is Solution?</label><br />
 
-          <input
-            class="form-control"
-            type="file"
-            @change="uploadOptionImage4"
-          />
-          <img
-            style="max-width: 500px; max-height: 500px; border: 3px black solid"
-            :src="optionImage4"
-            alt=""
-          />
+          <input class="form-control" type="file" @change="uploadOptionImage4" />
+          <img style="max-width: 500px; max-height: 500px; border: 3px black solid" :src="optionImage4" alt="" />
         </div>
       </div>
 
       <div class="success_text">{{ success_text }}</div>
 
       <hr class="horizontal dark" />
-      <argon-button
-        color="primary"
-        size="sm"
-        class="ms-auto"
-        @click="SubmitForm"
-        >Submit</argon-button
-      >
+      <argon-button color="primary" size="sm" class="ms-auto" @click="SubmitForm">Submit</argon-button>
     </div>
   </div>
 </template>
@@ -423,7 +324,7 @@ export default {
       // console.log(this.examList);
     },
     async generateImageUrl(url) {
-      return "http://localhost:3000/" + url;
+      return process.env.SERVER + url;
     },
     async prePopulateData() {
       console.log("Question Data", this.questionData);
@@ -507,10 +408,11 @@ export default {
 </script>
 
 <style>
-.vue-alert > .alert-container .alert-content > p.alert-message {
+.vue-alert>.alert-container .alert-content>p.alert-message {
   color: black;
 }
-.vue-alert > .alert-container .alert-content > p.alert-head {
+
+.vue-alert>.alert-container .alert-content>p.alert-head {
   color: black;
   font-size: 30px;
 }
