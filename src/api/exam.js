@@ -4,6 +4,8 @@ class ExamAPI {
     console.log(process.env.SERVER);
   }
   static fetchAllExams() {
+    console.log(process.env.SERVER, "COnsole");
+
     return serverAPI.get(`/exam/list/`, {
       headers: {
         // Authorization: `Bearer ${store.state.loginManagement.token}`,
