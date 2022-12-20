@@ -324,7 +324,7 @@ export default {
       // console.log(this.examList);
     },
     async generateImageUrl(url) {
-      return process.env.SERVER + url;
+      return VUE_APP_SERVER + url;
     },
     async prePopulateData() {
       console.log("Question Data", this.questionData);

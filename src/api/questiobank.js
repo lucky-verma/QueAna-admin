@@ -1,10 +1,10 @@
 import { serverAPI } from "./index";
 class QuestionBankAPI {
   constructor() {
-    console.log(process.env.SERVER);
+    console.log(VUE_APP_SERVER);
   }
   static fetchAllQuestions() {
-    console.log(process.env.SERVER, "kjljk");
+    console.log(VUE_APP_SERVER, "kjljk");
 
     return serverAPI.get(`/qb/list/`, {
       headers: {
