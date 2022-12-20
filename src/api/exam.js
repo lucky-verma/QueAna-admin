@@ -1,10 +1,10 @@
 import { serverAPI } from "./index";
 class ExamAPI {
   constructor() {
-    console.log(VUE_APP_SERVER);
+    console.log(process.env.VUE_APP_SERVER);
   }
   static fetchAllExams() {
-    console.log(VUE_APP_SERVER, "COnsole");
+    console.log(process.env.VUE_APP_SERVER, "COnsole");
 
     return serverAPI.get(`/exam/list/`, {
       headers: {

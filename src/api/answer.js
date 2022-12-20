@@ -1,7 +1,7 @@
 import { serverAPI } from "./index";
 class AnswerAPI {
   constructor() {
-    console.log(VUE_APP_SERVER);
+    console.log(process.env.VUE_APP_SERVER);
   }
   static fetchAllAnswers() {
     return serverAPI.get(`/answer/list/`, {
